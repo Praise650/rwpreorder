@@ -19,7 +19,7 @@ class _HomeViewState extends State<HomeView> {
       builder: (context, sizingInformation) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('RW \'20 Preorder'),
+            title: Text('RW \'23 Preorder'),
           ),
           body: Center(
             child: SingleChildScrollView(

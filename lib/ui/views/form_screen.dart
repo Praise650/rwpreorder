@@ -26,15 +26,19 @@ class _FormViewState extends State<FormView> {
   String groupValue = 'color';
   List<String> sizes = ["Small", "Medium", "Large"];
   List<String> packages = [
-    'Premium package',
-    'Shirt and free nose mask',
-    'cap',
-    'Pen & Jotter'
+    'Tee shirts',
+    'Hoodie',
+    'Sweat shirt',
+    'Varsity Jacket',
+    'Face cap',
+    'Tote bag',
+    'Jotter',
+    'Test'
   ];
-  List<String> colors = ['black', 'blue', 'wine', 'ash'];
+  List<String> colors = ['black', 'blue', 'white'];
   String size = "Small";
-  String package = "Premium package";
-  double price = 3500.0;
+  String package = "Hoodie";
+  double price = 6000.0;
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -120,17 +124,29 @@ class _FormViewState extends State<FormView> {
                                       setState(() {
                                         package = value;
                                         switch (value) {
-                                          case 'Premium package':
-                                            price = 3500.00;
+                                          case 'Tee shirts':
+                                            price = 3000.00;
                                             break;
-                                          case 'Shirt and free nose mask':
-                                            price = 2500.00;
+                                          case 'Hoodie':
+                                            price = 6000.00;
                                             break;
-                                          case 'cap':
-                                            price = 1000.00;
+                                          case 'Varsity Jacket':
+                                            price = 6000.00;
                                             break;
-                                          case 'Pen & Jotter':
-                                            price = 500.00;
+                                          case 'Sweat shirt':
+                                            price = 4000.00;
+                                            break;
+                                          case 'Tote bag':
+                                            price = 2000.00;
+                                            break;
+                                          case 'Face cap':
+                                            price = 2000.00;
+                                            break;
+                                          case 'Jotter':
+                                            price = 800.00;
+                                            break;
+                                            case 'Test':
+                                            price = 50.00;
                                             break;
                                           default:
                                             price = 0.00;
@@ -280,7 +296,7 @@ class _FormViewState extends State<FormView> {
         } else
           charges = order.price * 0.0156 + 100;
 
-        showToast("Applied Payment Fee: ${charges}",
+        showToast("Applied Payment Fee: $charges",
             context: context,
             position: ToastPosition.bottom,
             duration: Duration(seconds: 2));

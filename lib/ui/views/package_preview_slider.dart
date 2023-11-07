@@ -20,34 +20,33 @@ class PackagePreviewSlide extends StatefulWidget {
 class _PackagePreviewSlideState extends State<PackagePreviewSlide> {
   Map<String, String> images = {
     Assets.preorder_1:
-        'This package contains a whine shirt, a cap, a jotter, a pen and a nose mask for \u20A6 3500.00',
+        'This package contains a Varsity Jacket for \u20A6 6000.00',
     Assets.preorder_2:
-        'This package contains a black shirt, a cap, a jotter, a pen and a nose mask for \u20A6 3500.00',
+        'This package contains a Tee shirt for \u20A6 3000.00',
     Assets.preorder_3:
-        'This package contains a blue shirt, a cap, a jotter, a pen and a nose mask for \u20A6 3500.00',
+        'This package contains a Tote bag for \u20A6 2000.00',
     Assets.preorder_4:
-        'This package contains a ash shirt, a cap, a jotter, a pen and a nose mask for \u20A6 3500.00',
+        'This package contains a Hoodie for \u20A6 6000.00',
     Assets.preorder_5:
-        'This package contains a blue shirt, and a free nose mask for \u20A6 2500.00',
+    'This package contains a Varsity Jacket for \u20A6 6000.00',
     Assets.preorder_6:
-        'This package contains a ash shirt, and a free nose mask for \u20A6 2500.00',
+        'This package contains a white Tee shirt for \u20A6 3000.00',
     Assets.preorder_7:
-        'This package contains the branded cap for \u20A6 1000.00',
+        'This package contains the branded jotter for \u20A6 800.00',
     Assets.preorder_8:
-        'This package contains a wine shirt, and a free nose mask for \u20A6 2500.00',
+        'This package contains a black sweat shirt for \u20A6 4000.00',
     Assets.preorder_9:
-        'This package contains a black shirt, and a free nose mask for \u20A6 2500.00',
-    Assets.preorder_10:
-        'This package contains the branded jotter and pen for \u20A6 500.00',
+        'This package contains a black face cap for \u20A6 2000.00',
+    // Assets.preorder_10:
+    //     'This package contains the branded jotter and pen for \u20A6 500.00',
   };
 
   int carouselIndex = 0;
-  final double defaultCarouselHeight = 200;
+  final double defaultCarouselHeight = 300;
   double carouselHeight;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     carouselHeight = defaultCarouselHeight;
   }
@@ -169,7 +168,7 @@ class _ImageCardState extends State<ImageCard> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             image: DecorationImage(
-                image: AssetImage(widget.image_asset), fit: BoxFit.cover)),
+                image: AssetImage(widget.image_asset), fit: BoxFit.fill)),
       ),
     );
   }
