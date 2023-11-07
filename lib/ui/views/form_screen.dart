@@ -32,8 +32,7 @@ class _FormViewState extends State<FormView> {
     'Varsity Jacket',
     'Face cap',
     'Tote bag',
-    'Jotter',
-    'Test'
+    'Jotter'
   ];
   List<String> colors = ['black', 'blue', 'white'];
   String size = "Small";
@@ -144,9 +143,6 @@ class _FormViewState extends State<FormView> {
                                             break;
                                           case 'Jotter':
                                             price = 800.00;
-                                            break;
-                                            case 'Test':
-                                            price = 50.00;
                                             break;
                                           default:
                                             price = 0.00;
