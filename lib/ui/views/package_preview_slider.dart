@@ -30,11 +30,11 @@ class _PackagePreviewSlideState extends State<PackagePreviewSlide> {
     Assets.preorder_5:
     'This package contains a Varsity Jacket for \u20A6 6000.00',
     Assets.preorder_6:
-        'This package contains a white Tee shirt for \u20A6 3000.00',
+        'This package contains a Tee shirt for \u20A6 3000.00',
     Assets.preorder_7:
-        'This package contains the branded jotter for \u20A6 800.00',
+        'This package contains the black branded jotter for \u20A6 800.00',
     Assets.preorder_8:
-        'This package contains a black sweat shirt for \u20A6 4000.00',
+        'This package contains a sweat shirt for \u20A6 4000.00',
     Assets.preorder_9:
         'This package contains a black face cap for \u20A6 2000.00',
     // Assets.preorder_10:

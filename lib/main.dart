@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:rwk20/ui/views/home_view.dart';
 
+import 'ui/views/payment_list.dart';
+
 void main() async {
   // runApp(DevicePreview(builder: (context) => MyApp()));
   WidgetsFlutterBinding.ensureInitialized();
