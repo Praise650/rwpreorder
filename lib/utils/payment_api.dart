@@ -7,9 +7,14 @@ class PaymentApi {
   static const String paystackAPI = "https://api.paystack.co/transaction/";
   static const String verify =
       "https://api.paystack.co/transaction/verify/:reference";
+  ///old
+  // static const String skTest =
+  //     "sk_live_a218b9ffd29b6bb8188a0c0665cf26573a341d80";
+
   static const String skTest =
-      "sk_live_a218b9ffd29b6bb8188a0c0665cf26573a341d80";
-  static const String callbackUrl = "https://rcffuta.org";
+      "sk_live_b442d653c90f43c01969085a228076a1487a7907";
+  // static const String callbackUrl = "https://rcffuta.org";
+  static const String callbackUrl = "https://rwpreorder.web.app";
 
   static Map<String, String> headers(String skTest) => {
         'Content-Type': 'application/json',

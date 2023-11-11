@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
@@ -28,10 +26,12 @@ class _MyAppState extends State<MyApp> {
         builder: (context, snapshot) {
           // Check for errors
           if (snapshot.hasError) {
-            return Container(
-              child: Center(
-                child: Text(
-                    "Something Went Wrong!... Could not initialize firebase."),
+            return MaterialApp(
+              home: Container(
+                child: Center(
+                  child: Text(
+                      "Something Went Wrong!... Could not initialize firebase."),
+                ),
               ),
             );
           }
@@ -50,9 +50,11 @@ class _MyAppState extends State<MyApp> {
           }
 
           // Otherwise, show something whilst waiting for initialization to complete
-          return Container(
-            child: Center(
-              child: Text("Loading..."),
+          return MaterialApp(
+            home: Container(
+              child: Center(
+                child: Text("Loading..."),
+              ),
             ),
           );
         });

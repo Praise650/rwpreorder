@@ -5,7 +5,8 @@ class InputField extends StatelessWidget {
   final int lines;
   final TextInputType inputType;
   final TextEditingController controller;
-  final Function validator;
+  final Function(String) validator;
+  final bool obscureText;
 
   const InputField({
     Key key,
@@ -13,6 +14,7 @@ class InputField extends StatelessWidget {
     this.lines = 1,
     this.inputType,
     this.validator,
+    this.obscureText = false,
     @required this.controller,
   }) : super(key: key);
 
@@ -30,6 +32,7 @@ class InputField extends StatelessWidget {
               }
             : validator,
         controller: controller,
+        obscureText: obscureText,
         minLines: lines,
         maxLines: lines,
         keyboardType: inputType,

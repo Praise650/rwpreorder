@@ -26,17 +26,24 @@ class _FormViewState extends State<FormView> {
   String groupValue = 'color';
   List<String> sizes = ["Small", "Medium", "Large"];
   List<String> packages = [
-    'Premium package',
-    'Shirt and free nose mask',
-    'cap',
-    'Pen & Jotter'
+    'Tee shirts',
+    'Hoodie',
+    'Sweat shirt',
+    'Varsity Jacket',
+    'Face cap',
+    'Tote bag',
+    'Jotter'
   ];
-  List<String> colors = ['black', 'blue', 'wine', 'ash'];
+  List<String> colors = ['black', 'blue', 'white'];
   String size = "Small";
-  String package = "Premium package";
-  double price = 3500.0;
+  String package = "Hoodie";
+  double price = 6000.0;
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool _loading = false;
+  set loading(bool value) {
+    setState(() => _loading = value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,17 +127,28 @@ class _FormViewState extends State<FormView> {
                                       setState(() {
                                         package = value;
                                         switch (value) {
-                                          case 'Premium package':
-                                            price = 3500.00;
+                                          case 'Tee shirts':
+                                            price = 3000.00;
                                             break;
-                                          case 'Shirt and free nose mask':
-                                            price = 2500.00;
+                                          case 'Hoodie':
+                                            price = 6000.00;
                                             break;
-                                          case 'cap':
-                                            price = 1000.00;
+                                          case 'Varsity Jacket':
+                                            price = 6000.00;
                                             break;
-                                          case 'Pen & Jotter':
-                                            price = 500.00;
+                                          case 'Sweat shirt':
+                                            price = 4000.00;
+                                            break;
+                                          case 'Tote bag':
+                                            price = 2000.00;
+                                            color = colors[0];
+                                            break;
+                                          case 'Face cap':
+                                            price = 2000.00;
+                                            break;
+                                          case 'Jotter':
+                                            price = 800.00;
+                                            color = colors[0];
                                             break;
                                           default:
                                             price = 0.00;
@@ -223,16 +241,22 @@ class _FormViewState extends State<FormView> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                          onPressed: () async {
-                            await submitForm(context);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              "Pay Now",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          )),
+                          onPressed: _loading == true
+                              ? null
+                              : () async {
+                                  await submitForm(context);
+                                },
+                          child: _loading == true
+                              ? CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Text(
+                                    "Pay Now",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                )),
                     ),
                   ],
                 ),
@@ -245,16 +269,21 @@ class _FormViewState extends State<FormView> {
   }
 
   Future submitForm(BuildContext context) async {
+    var otherPackageColor =
+        package == 'Tote bag' || package == 'Jotter' ? colors[0] : color;
+    loading = true;
     if (formKey.currentState.validate()) {
       // Upload Order here
       order.package = package;
       order.customerName = nameController.text;
-      order.color = color;
+      order.color = otherPackageColor;
       order.phone = phoneController.text;
       order.email = emailController.text;
       order.location = locationController.text;
       order.size = size;
       order.price = price;
+      order.delivered = false;
+      order.deliveredStatus = 'Pending';
       await Future.delayed(Duration(seconds: 1));
 
       print("Getting firebase instance");
@@ -271,23 +300,28 @@ class _FormViewState extends State<FormView> {
         'size': order.size,
         'price': order.price,
         'date': order.date,
-      }).then((value) async {
+        'delivered':order.delivered,
+        'deliveredStatus':order.deliveredStatus
+
+        // 'id':orders.id,
+        }).then((value) async {
         print('Details Added');
 
         double charges = 0;
-        if (order.price < 1000) {
-          charges = order.price * 0.0156;
+        if (order.price < 2400) {
+          charges = order.price * 0.016;
         } else
-          charges = order.price * 0.0156 + 100;
+          charges = (order.price * 0.016) + 100;
 
-        showToast("Applied Payment Fee: ${charges}",
+        showToast("Applied Payment Fee: ${order.price + charges}",
             context: context,
             position: ToastPosition.bottom,
             duration: Duration(seconds: 2));
 
         PaymentApi.initializePayment(
-                ((order.price + charges) * 100).round(), order.email)
+          ((order.price + charges) * 100).round(), order.email)
             .then((value) {
+          loading = false;
           // Navigator.push(
           //     context,
           //     MaterialPageRoute(
@@ -295,12 +329,14 @@ class _FormViewState extends State<FormView> {
 
           js.context.callMethod('open', ['${value.authorizationUrl}']);
         }).catchError((e) {
+          loading = false;
           showToast("${e.toString()}",
               context: context,
               position: ToastPosition.bottom,
               duration: Duration(seconds: 2));
         });
       }).catchError((onError) {
+        loading = false;
         // Fluttertoast.showToast(
         //     msg: "An Error Occurred... Please try again!",
         //     toastLength: Toast.LENGTH_LONG);
@@ -310,6 +346,7 @@ class _FormViewState extends State<FormView> {
       // Navigator.pop(context);
     } else {
       print("Fields not filled correctly");
+      loading = false;
       // Fluttertoast.showToast(
       //     msg: "Fill all fields", backgroundColor: Colors.red.withOpacity(0.5));
       showToast("Please fill all fields correctly",
