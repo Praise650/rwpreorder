@@ -130,7 +130,6 @@ class _AcceptUserState extends State<AcceptUser> {
               Navigator.pop(context);
             },
           );
-          Navigator.pop(context);
         },
       );
     } catch (e) {

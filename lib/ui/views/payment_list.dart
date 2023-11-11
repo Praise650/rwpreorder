@@ -4,14 +4,14 @@ import 'package:rwk20/models/payment_list_model.dart';
 import 'package:rwk20/ui/base_widget.dart';
 import 'package:rwk20/widgets/payment_list_view_widget.dart';
 
-class PaymentList extends StatefulWidget {
-  const PaymentList({Key key}) : super(key: key);
+class PaymentListView extends StatefulWidget {
+  const PaymentListView({Key key}) : super(key: key);
 
   @override
-  _PaymentListState createState() => _PaymentListState();
+  _PaymentListViewState createState() => _PaymentListViewState();
 }
 
-class _PaymentListState extends State<PaymentList> {
+class _PaymentListViewState extends State<PaymentListView> {
   @override
   void initState() {
     super.initState();
@@ -43,75 +43,82 @@ class _PaymentListState extends State<PaymentList> {
           return Scaffold(
             appBar: AppBar(
               leading: SizedBox.shrink(),
-              flexibleSpace: Column(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'RW \'23 Preorder Payment List',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Expanded(
-                    child: TabBar(
-                      physics: const NeverScrollableScrollPhysics(),
-                      onTap: (index) => updateIndex(index),
-                      tabs: const [
-                        Tab(text: "Pending"),
-                        Tab(text: "Approved"),
-                        Tab(text: "All"),
-                      ],
-                    ),
-                  ),
-                ],
+              elevation: 0,
+              title: Text(
+                'RW \'23 Preorder Payment List',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
-            body: FutureBuilder<QuerySnapshot>(
-              future: _init(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done ||
-                    snapshot.hasData) {
-                  final List<DocumentSnapshot> documents = snapshot.data.docs;
-                  paymentList = documents
-                      .map(
-                        (document) => PaymentListModel.fromJson(
-                          document.data(),
-                          document.id,
-                        ),
-                      )
-                      .toList();
+            body: Column(
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      color: Colors.orange,
+                      child: TabBar(
+                        indicatorColor: Colors.white,
+                        physics: const NeverScrollableScrollPhysics(),
+                        onTap: (index) => updateIndex(index),
+                        tabs: const [
+                          Tab(text: "Pending"),
+                          Tab(text: "Approved"),
+                          Tab(text: "All"),
+                        ],
+                      ),
+                    ),
+                    Container(height: 10,color: Colors.orange,)
+                  ],
+                ),
+                Expanded(
+                  child: FutureBuilder<QuerySnapshot>(
+                    future: _init(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done ||
+                          snapshot.hasData) {
+                        final List<DocumentSnapshot> documents = snapshot.data.docs;
+                        paymentList = documents
+                            .map(
+                              (document) => PaymentListModel.fromJson(
+                                document.data(),
+                                document.id,
+                              ),
+                            )
+                            .toList();
 
-                  return Builder(
-                    builder: (context) {
-                      if (selectedIndex == 0) {
-                        final pending = paymentList
-                            .where((element) => element.delivered == false)
-                            .toList();
-                        return PaymentListviewWidget(
-                          paymentList: pending,
+                        return Builder(
+                          builder: (context) {
+                            if (selectedIndex == 0) {
+                              final pending = paymentList
+                                  .where((element) => element.delivered == false)
+                                  .toList();
+                              return PaymentListviewWidget(
+                                paymentList: pending,
+                              );
+                            } else if (selectedIndex == 1) {
+                              final approved = paymentList
+                                  .where((element) => element.delivered == true)
+                                  .toList();
+                              return PaymentListviewWidget(
+                                paymentList: approved,
+                              );
+                            } else {
+                              return PaymentListviewWidget(
+                                paymentList: paymentList,
+                              );
+                            }
+                          },
                         );
-                      } else if (selectedIndex == 1) {
-                        final approved = paymentList
-                            .where((element) => element.delivered == true)
-                            .toList();
-                        return PaymentListviewWidget(
-                          paymentList: approved,
-                        );
-                      } else {
-                        return PaymentListviewWidget(
-                          paymentList: paymentList,
-                        );
+                      } else if (snapshot.hasError) {
+                        return Text('It\'s Error!');
                       }
+                      return Center(child: CircularProgressIndicator());
                     },
-                  );
-                } else if (snapshot.hasError) {
-                  return Text('It\'s Error!');
-                }
-                return Center(child: CircularProgressIndicator());
-              },
+                  ),
+                ),
+              ],
             ),
           );
         },

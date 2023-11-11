@@ -269,7 +269,8 @@ class _FormViewState extends State<FormView> {
   }
 
   Future submitForm(BuildContext context) async {
-    var otherPackageColor = package == 'Tote bag'|| package == 'Jotter'? colors[0]:color;
+    var otherPackageColor =
+        package == 'Tote bag' || package == 'Jotter' ? colors[0] : color;
     loading = true;
     if (formKey.currentState.validate()) {
       // Upload Order here
@@ -303,22 +304,22 @@ class _FormViewState extends State<FormView> {
         'deliveredStatus':order.deliveredStatus
 
         // 'id':orders.id,
-      }).then((value) async {
+        }).then((value) async {
         print('Details Added');
 
         double charges = 0;
-        if (order.price < 1000) {
-          charges = order.price * 0.0156;
+        if (order.price < 2400) {
+          charges = order.price * 0.016;
         } else
-          charges = order.price * 0.0156 + 100;
+          charges = (order.price * 0.016) + 100;
 
-        showToast("Applied Payment Fee: $charges",
+        showToast("Applied Payment Fee: ${order.price + charges}",
             context: context,
             position: ToastPosition.bottom,
             duration: Duration(seconds: 2));
 
         PaymentApi.initializePayment(
-                ((order.price + charges) * 100).round(), order.email)
+          ((order.price + charges) * 100).round(), order.email)
             .then((value) {
           loading = false;
           // Navigator.push(

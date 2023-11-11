@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rwk20/core/app_const.dart';
 import 'package:rwk20/ui/views/payment_list.dart';
 import 'package:rwk20/widgets/input_field.dart';
 
@@ -10,8 +11,7 @@ class LoginDialogWidget extends StatefulWidget {
 }
 
 class _LoginDialogWidgetState extends State<LoginDialogWidget> {
-  final username = 'rcffuta@admin.com';
-  final password = 'rwpreorder23#';
+
   bool loading = false;
 
   final TextEditingController email = TextEditingController();
@@ -82,15 +82,15 @@ class _LoginDialogWidgetState extends State<LoginDialogWidget> {
 
                             if (key.currentState.validate()) {
                               key.currentState.save();
-                              if (email.text == username &&
-                                  passwords.text == password) {
+                              if (email.text == AppConst.username &&
+                                  passwords.text == AppConst.password) {
                                 setState(() => wrongDetails = '');
                                 Future.delayed(Duration(seconds: 4), () {
                                   setState(() => loading = false);
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => PaymentList(),
+                                      builder: (context) => PaymentListView(),
                                     ),
                                   );
                                 });
